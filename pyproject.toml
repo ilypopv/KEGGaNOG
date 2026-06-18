@@ -6,9 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "kegganog"
 version = "1.6.4"
 description = "A tool for generating KEGG heatmaps from eggNOG-mapper outputs."
-readme = {file = "README.md", content-type = "text/markdown"}
-license = {file = "LICENSE"}
-authors = [{name = "Ilia Popov", email = "iljapopov17@gmail.com"}]
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE" }
+authors = [{ name = "Ilia Popov", email = "iljapopov17@gmail.com" }]
 requires-python = ">=3.10,<=3.16"
 dependencies = [
     "pydantic>=2.9.0,<3",
@@ -64,6 +64,4 @@ filterwarnings = [
 omit = ["*/processing/KEGG_decoder.py"]
 
 [tool.coverage.report]
-exclude_lines = [
-    "if __name__ == .__main__.:",
-]
+exclude_lines = ["if __name__ == .__main__.:"]
