@@ -192,15 +192,21 @@ def generate_grouped_heatmap_multi(
             cbar_kws=cbar_kws,
             mask=np.tile(mask[:, None], (1, pivot_table.shape[1])),
         )
-        ax.tick_params(axis="y", labelrotation=0)
-        add_group_labels(ax, part_df, group_labels)
-
-        # Safely hide structural split markers from y-axes output
-        for label in ax.get_yticklabels():
-            if label.get_text().startswith("split_"):
-                label.set_visible(False)
-
+        # Derive tick positions directly from the index — get_yticklabels()
+        # returns empty text before the figure is rendered, making the old
+        # set_visible(False) loop a silent no-op.
+        non_split_pos = [
+            i + 0.5
+            for i, name in enumerate(pivot_table.index)
+            if not str(name).startswith("split_")
+        ]
+        non_split_labels = [
+            name for name in pivot_table.index if not str(name).startswith("split_")
+        ]
+        ax.set_yticks(non_split_pos)
+        ax.set_yticklabels(non_split_labels, rotation=0)
         ax.tick_params(axis="y", which="both", left=False)
+        add_group_labels(ax, part_df, group_labels)
 
     # Map underlying statistical matrices chunk-by-chunk onto partitioned views
     with tqdm(total=3, desc="Creating heatmap parts") as pbar:
