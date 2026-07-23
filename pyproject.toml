@@ -8,7 +8,7 @@ version = "1.6.4"
 description = "A tool for generating KEGG heatmaps from eggNOG-mapper outputs."
 readme = { file = "README.md", content-type = "text/markdown" }
 license = { file = "LICENSE" }
-authors = [{ name = "Ilia Popov", email = "iljapopov17@gmail.com" }]
+authors = [{ name = "Ilya (Ilia) Popov", email = "ilypopv@gmail.com" }]
 requires-python = ">=3.10,<=3.16"
 dependencies = [
     "pydantic>=2.9.0,<3",
@@ -38,7 +38,7 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/iliapopov17/KEGGaNOG"
+Homepage = "https://github.com/ilypopv/KEGGaNOG"
 
 [project.scripts]
 KEGGaNOG = "kegganog.kegganog:entry_point"
