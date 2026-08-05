@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pydantic schemas for data validation in KEGGaNOG.
 
 This module defines the structural contracts used across both the
