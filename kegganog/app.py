@@ -18,7 +18,7 @@ import tempfile
 import uuid
 from importlib.metadata import version as _metadata_version
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 import pandas as pd
 from fastapi import FastAPI, Form, UploadFile
@@ -137,7 +137,7 @@ async def index() -> HTMLResponse:
 async def run_analysis(
     file: UploadFile,
     dpi: int = Form(default=300),
-    color: ValidColor = Form(default="Blues"),
+    color: Annotated[ValidColor, Form()] = "Blues",
     sample_name: str = Form(default="SAMPLE"),
     group: bool = Form(default=False),
 ) -> JobStatus | JSONResponse:
@@ -176,7 +176,7 @@ async def run_analysis(
 async def run_analysis_multi(
     files: list[UploadFile],
     dpi: int = Form(default=300),
-    color: ValidColor = Form(default="Blues"),
+    color: Annotated[ValidColor, Form()] = "Blues",
     group: bool = Form(default=False),
 ) -> JobStatus | JSONResponse:
     """Process an uploaded matrix collection array under cumulative memory safeguards."""
@@ -348,36 +348,36 @@ async def run_viz(
     title: str = Form(default=""),
     title_fontsize: float = Form(default=16.0),
     title_color: str = Form(default="black"),
-    title_weight: FontWeight = Form(default="normal"),
-    title_style: FontStyle = Form(default="normal"),
+    title_weight: Annotated[FontWeight, Form()] = "normal",
+    title_style: Annotated[FontStyle, Form()] = "normal",
     background_color: str = Form(default="white"),
     xlabel: str = Form(default=""),
     xlabel_fontsize: float = Form(default=14.0),
     xlabel_color: str = Form(default="black"),
-    xlabel_weight: FontWeight = Form(default="normal"),
-    xlabel_style: FontStyle = Form(default="normal"),
+    xlabel_weight: Annotated[FontWeight, Form()] = "normal",
+    xlabel_style: Annotated[FontStyle, Form()] = "normal",
     ylabel: str = Form(default=""),
     ylabel_fontsize: float = Form(default=14.0),
     ylabel_color: str = Form(default="black"),
-    ylabel_weight: FontWeight = Form(default="normal"),
-    ylabel_style: FontStyle = Form(default="normal"),
+    ylabel_weight: Annotated[FontWeight, Form()] = "normal",
+    ylabel_style: Annotated[FontStyle, Form()] = "normal",
     xticks_fontsize: float = Form(default=12.0),
     xticks_color: str = Form(default="black"),
-    xticks_weight: FontWeight = Form(default="normal"),
-    xticks_style: FontStyle = Form(default="normal"),
+    xticks_weight: Annotated[FontWeight, Form()] = "normal",
+    xticks_style: Annotated[FontStyle, Form()] = "normal",
     xticks_rotation: float = Form(default=0.0),
-    xticks_ha: HorizontalAlignment = Form(default="center"),
+    xticks_ha: Annotated[HorizontalAlignment, Form()] = "center",
     yticks_fontsize: float = Form(default=12.0),
     yticks_color: str = Form(default="black"),
-    yticks_weight: FontWeight = Form(default="normal"),
-    yticks_style: FontStyle = Form(default="normal"),
+    yticks_weight: Annotated[FontWeight, Form()] = "normal",
+    yticks_style: Annotated[FontStyle, Form()] = "normal",
     grid: bool = Form(default=True),
     grid_linestyle: str = Form(default="--"),
     grid_alpha: float = Form(default=0.7),
     cmap: str = Form(default=""),
     cmap_range_min: int = Form(default=8),
     cmap_range_max: int = Form(default=30),
-    sort_order: SortOrder = Form(default="descending"),
+    sort_order: Annotated[SortOrder, Form()] = "descending",
     box_color: str = Form(default="blue"),
     showfliers: bool = Form(default=True),
     grid_color: str = Form(default="gray"),
@@ -389,7 +389,7 @@ async def run_viz(
     node_linewidths: float = Form(default=1.5),
     label_fontsize: float = Form(default=8.0),
     label_color: str = Form(default="#03045E"),
-    label_weight: FontWeight = Form(default="normal"),
+    label_weight: Annotated[FontWeight, Form()] = "normal",
     edge_cmap: str = Form(default="coolwarm"),
     cbar_size: float = Form(default=0.5),
     pathways_selected: str = Form(default=""),
@@ -397,7 +397,7 @@ async def run_viz(
     sample_order: str = Form(default=""),
     fill_alpha: float = Form(default=0.25),
     line_width: float = Form(default=2.0),
-    line_style: LineStyle = Form(default="solid"),
+    line_style: Annotated[LineStyle, Form()] = "solid",
     label_background: str = Form(default=""),
     label_edgecolor: str = Form(default=""),
     label_pad: float = Form(default=1.05),
@@ -447,7 +447,7 @@ async def run_viz(
             return []
         try:
             return json.loads(s_clean)
-        except Exception:
+        except (json.JSONDecodeError, TypeError):
             return []
 
     figsize = (
@@ -532,7 +532,7 @@ async def run_viz(
             legend_fontsize,
             (legend_bbox_x, legend_bbox_y),
         )
-    except Exception as e:
+    except (ValueError, KeyError, FileNotFoundError, RuntimeError, TypeError) as e:
         return JSONResponse(status_code=500, content={"detail": str(e)})
 
     return FileResponse(path=png_path, media_type="image/png")
@@ -567,7 +567,13 @@ async def _run_job(job_id: str, file_bytes: bytes, params: WebParams) -> None:
                 "pathways": result.pathways,
             }
         )
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        RuntimeError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+    ) as e:
         _jobs[job_id].update({"status": "error", "message": str(e)})
 
 
@@ -596,7 +602,13 @@ async def _run_job_multi(
                 "pathways": result.pathways,
             }
         )
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        RuntimeError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+    ) as e:
         _jobs[job_id].update({"status": "error", "message": str(e)})
 
 
