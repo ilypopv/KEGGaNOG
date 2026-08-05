@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Base lifecycle management module for KEGGaNOG mathematical graphics.
 
 This module establishes the core architectural contract for handling matplotlib
@@ -7,7 +6,7 @@ by wrapping heavy graphical contexts into explicit transaction objects.
 """
 
 from pathlib import Path
-from typing import Literal, Optional, Union
+from typing import Literal
 
 import matplotlib.pyplot as plt
 
@@ -36,10 +35,10 @@ class KgnPlotBase:
 
     def savefig(
         self,
-        path: Union[str, Path],
+        path: str | Path,
         dpi: int = 300,
         transparent: bool = False,
-        bbox_inches: Optional[Union[Literal["tight"], str]] = "tight",
+        bbox_inches: Literal["tight"] | str | None = "tight",
     ) -> None:
         """Save the enclosed figure to a file using cross-platform safe IO pathways.
 
