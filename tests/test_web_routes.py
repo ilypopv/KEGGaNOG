@@ -11,7 +11,7 @@ import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
-import httpx
+import httpx2
 import pytest
 from conftest import make_minimal_png
 from fastapi.testclient import TestClient
@@ -92,14 +92,16 @@ async def test_run_completes_with_mocked_pipeline(tmp_path: Path) -> None:
             pathways=fake["pathways"],
         )
 
-    transport = httpx.ASGITransport(app=app)
+    transport = httpx2.ASGITransport(app=app)
     # The patch must wrap the *entire* flow — POST + polling + assertions —
     # because the background worker runs in a thread pool and may call
     # run_single after the POST coroutine has already returned.  Exiting the
     # patch context before the worker finishes causes the real run_single to
     # be called with b"dummy" bytes, which blows up on missing KEGG_ko column.
     with patch("kegganog.app.run_single", fake_run_single):
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 "/run",
                 files={"file": ("in.tsv", b"dummy", "text/tab-separated-values")},
