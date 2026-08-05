@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
 """Boxplot visualization module for KEGG module completion profiles.
 
 This module builds standalone box-and-whisker plots tracking macro-distribution
 metrics and pathway completeness density alterations across independent samples.
 """
 
-from typing import Literal, Optional, Tuple
+from typing import Literal
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -29,10 +28,10 @@ class KgnBoxplot(KgnPlotBase):
 
 def boxplot(
     df: pd.DataFrame,
-    figsize: Tuple[float, float] = (12.0, 6.0),
-    color: Optional[str] = "blue",
+    figsize: tuple[float, float] = (12.0, 6.0),
+    color: str | None = "blue",
     showfliers: bool = True,
-    title: Optional[str] = None,
+    title: str | None = None,
     title_fontsize: float = 16.0,
     title_color: str = "black",
     title_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
@@ -61,7 +60,7 @@ def boxplot(
     grid_color: str = "gray",
     grid_linestyle: str = "--",
     grid_linewidth: float = 0.5,
-    background_color: Optional[str] = "white",
+    background_color: str | None = "white",
 ) -> KgnBoxplot:
     """Generate a publication-grade customizable boxplot for pathway completeness distributions.
 
