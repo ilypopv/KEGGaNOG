@@ -10,6 +10,7 @@ import shutil
 import sys
 from importlib.metadata import version as _metadata_version
 from pathlib import Path
+from typing import Annotated
 
 import typer
 from pydantic import ValidationError
@@ -200,12 +201,14 @@ def main(
         "--dpi",
         help="DPI resolution mapping index for the output image visualization.",
     ),
-    color: ValidColor = typer.Option(
-        "Blues",
-        "-c",
-        "--color",
-        help="Target seaborn color map palette matrix rule.",
-    ),
+    color: Annotated[
+        ValidColor,
+        typer.Option(
+            "-c",
+            "--color",
+            help="Target seaborn color map palette matrix rule.",
+        ),
+    ] = "Blues",
     sample_name: str = typer.Option(
         "SAMPLE",
         "-n",
