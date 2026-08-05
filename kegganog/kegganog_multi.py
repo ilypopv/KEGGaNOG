@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Orchestration engine for multi-sample functional profile processing.
 
 This module coordinates multi-sample data ingestion from file lists or single
