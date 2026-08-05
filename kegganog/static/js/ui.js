@@ -28,7 +28,7 @@ function hideStatus() {
 }
 
 // Live GitHub star count
-fetch("https://api.github.com/repos/iliapopov17/KEGGaNOG")
+fetch("https://api.github.com/repos/ilypopv/KEGGaNOG")
   .then(r => r.json())
   .then(d => {
     if (d.stargazers_count !== undefined)
