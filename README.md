@@ -1,7 +1,7 @@
 # KEGGaNOG
 
-<img src="https://github.com/iliapopov17/KEGGaNOG/blob/main/imgs/KaN_logo_light.png#gh-light-mode-only" align="left" width = 25%/>
-<img src="https://github.com/iliapopov17/KEGGaNOG/blob/main/imgs/KaN_logo_dark.png#gh-dark-mode-only" align="left" width = 25%/>
+<img src="https://github.com/ilypopv/KEGGaNOG/blob/main/imgs/KaN_logo_light.png#gh-light-mode-only" align="left" width = 25%/>
+<img src="https://github.com/ilypopv/KEGGaNOG/blob/main/imgs/KaN_logo_dark.png#gh-dark-mode-only" align="left" width = 25%/>
 
 <br>
 <br>
@@ -10,7 +10,7 @@
 ![KEGG-Decoder](https://img.shields.io/badge/Dependecy-KEGG_Decoder-steelblue)
 ![License](https://img.shields.io/badge/License-MIT-steelblue)
 [![Downloads](https://static.pepy.tech/badge/kegganog)](https://pepy.tech/project/kegganog)
-[![codecov](https://codecov.io/gh/iliapopov17/KEGGaNOG/graph/badge.svg)](https://codecov.io/gh/iliapopov17/KEGGaNOG)
+[![codecov](https://codecov.io/gh/ilypopv/KEGGaNOG/graph/badge.svg)](https://codecov.io/gh/ilypopv/KEGGaNOG)
 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
@@ -72,7 +72,7 @@ Usage: KEGGaNOG [OPTIONS]
 ╰────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-🔗 Please visit [KEGGaNOG wiki](https://github.com/iliapopov17/KEGGaNOG/wiki) page
+🔗 Please visit [KEGGaNOG wiki](https://github.com/ilypopv/KEGGaNOG/wiki) page
 
 ### Web interface mode
 
@@ -104,11 +104,11 @@ These figures are generated using functional groupping mode (`-g`/`--group`) and
 
 ### User APIs visualization
 
-|[Barplot](https://github.com/iliapopov17/KEGGaNOG/wiki/Barplot-API)|[Boxplot](https://github.com/iliapopov17/KEGGaNOG/wiki/Boxplot-API)|[Radarplot](https://github.com/iliapopov17/KEGGaNOG/wiki/Radarplot-API)|[Correlation Network](https://github.com/iliapopov17/KEGGaNOG/wiki/Correlation-Network-API)|
+|[Barplot](https://github.com/ilypopv/KEGGaNOG/wiki/Barplot-API)|[Boxplot](https://github.com/ilypopv/KEGGaNOG/wiki/Boxplot-API)|[Radarplot](https://github.com/ilypopv/KEGGaNOG/wiki/Radarplot-API)|[Correlation Network](https://github.com/ilypopv/KEGGaNOG/wiki/Correlation-Network-API)|
 |-------|-------|---------|-------------------|
 |![image](https://github.com/user-attachments/assets/81d69bef-f69c-4960-b2d3-73e348e3853a)|![image](https://github.com/user-attachments/assets/f98fd993-20b7-4b00-b203-83b40fe35f9c)|![image](https://github.com/user-attachments/assets/dd75e5d8-e3c8-4eaa-b009-02c042534a53)|![image](https://github.com/user-attachments/assets/e76057b9-bcfd-4ba9-a4cf-cb7b4269441a)|
 
-|[Stacked Barplot](https://github.com/iliapopov17/KEGGaNOG/wiki/Stacked-Barplot-API)|[Streamgraph](https://github.com/iliapopov17/KEGGaNOG/wiki/Streamgraph-API)|[Stacked Barplot + Streamgraph](https://github.com/iliapopov17/KEGGaNOG/wiki/Combined-Stacked-Barplot-&-Streamgraph)|
+|[Stacked Barplot](https://github.com/ilypopv/KEGGaNOG/wiki/Stacked-Barplot-API)|[Streamgraph](https://github.com/ilypopv/KEGGaNOG/wiki/Streamgraph-API)|[Stacked Barplot + Streamgraph](https://github.com/ilypopv/KEGGaNOG/wiki/Combined-Stacked-Barplot-&-Streamgraph)|
 |-------|-------|-------|
 |![kgnstbar_OLD](https://github.com/user-attachments/assets/11e9e265-52c7-41b7-a284-64f3181caac3)|![kgnstream_OLD](https://github.com/user-attachments/assets/e82654fc-478a-4233-8478-f2c69ee4a1a6)|![combined_white_OLD](https://github.com/user-attachments/assets/6059da3c-4b74-47a2-af1c-427180f44845)|
 
