@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Universal heatmap orchestration module for KEGG module completion profiles.
 
 This module acts as a unified factory interface routing data profiles between
@@ -11,7 +10,8 @@ import io
 import shutil
 import tempfile
 import warnings
-from typing import Any, Generator, Optional, Sequence, Tuple
+from collections.abc import Generator, Sequence
+from typing import Any
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -35,14 +35,14 @@ def silent_plot_and_tqdm() -> Generator[None, None, None]:
     def silent_show(*args: Any, **kwargs: Any) -> None:
         pass
 
-    setattr(plt, "show", silent_show)
+    plt.show = silent_show
 
     class SilentTqdm(tqdm.tqdm):
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             kwargs["disable"] = True
             super().__init__(*args, **kwargs)
 
-    setattr(tqdm, "tqdm", SilentTqdm)
+    tqdm.tqdm = SilentTqdm
 
     with (
         contextlib.redirect_stdout(io.StringIO()),
@@ -71,10 +71,10 @@ class KgnHeatmap(KgnPlotBase):
 
 def heatmap(
     df: pd.DataFrame,
-    figsize: Optional[Tuple[float, float]] = None,
-    color: Optional[str] = None,
+    figsize: tuple[float, float] | None = None,
+    color: str | None = None,
     group: bool = False,
-    sample_name: Optional[str] = None,
+    sample_name: str | None = None,
     annot: bool = True,
 ) -> KgnHeatmap:
     """Universal heatmap router factory for single and multi-sample KEGG reconstructions.
