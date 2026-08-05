@@ -369,9 +369,11 @@ def generate_grouped_heatmap(
                     ha="right",
                     va="center",
                     weight="bold",
-                    bbox=dict(
-                        boxstyle="round,pad=0.3", edgecolor="none", facecolor="white"
-                    ),
+                    bbox={
+                        "boxstyle": "round,pad=0.3",
+                        "edgecolor": "none",
+                        "facecolor": "white",
+                    },
                 )
 
     def plot_heatmap(
