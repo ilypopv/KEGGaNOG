@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Entry point for the KEGGaNOG desktop web application.
 
 Orchestrates the lifecycle of the Uvicorn ASGI server and coordinates
