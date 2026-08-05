@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Stacked barplot visualization module for KEGG module completion profiles.
 
 This module builds normalized, multi-component stacked column charts tracking
@@ -6,7 +5,8 @@ aggregated functional pathway group completeness variations derived from
 eggNOG-mapper orthology annotations across independent samples.
 """
 
-from typing import Literal, Optional, Sequence, Tuple, Union
+from collections.abc import Sequence
+from typing import Literal
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,12 +32,12 @@ class KgnStackedBarplot(KgnPlotBase):
 
 def stacked_barplot(
     df: pd.DataFrame,
-    figsize: Tuple[float, float] = (14.0, 7.0),
-    cmap: Union[str, Sequence[str]] = "tab20",
+    figsize: tuple[float, float] = (14.0, 7.0),
+    cmap: str | Sequence[str] = "tab20",
     bar_width: float = 0.6,
     edgecolor: str = "black",
     edge_linewidth: float = 0.3,
-    title: Optional[str] = None,
+    title: str | None = None,
     title_fontsize: float = 16.0,
     title_color: str = "black",
     title_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
@@ -58,13 +58,13 @@ def stacked_barplot(
     xticks_color: str = "black",
     xticks_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
     xticks_style: Literal["normal", "italic", "oblique"] = "normal",
-    background_color: Optional[str] = "white",
+    background_color: str | None = "white",
     grid: bool = True,
     grid_linestyle: str = "--",
     grid_alpha: float = 0.7,
     legend_fontsize: float = 9.0,
     legend_loc: str = "upper left",
-    legend_bbox: Tuple[float, float] = (1.05, 1.0),
+    legend_bbox: tuple[float, float] = (1.05, 1.0),
     show_legend: bool = True,
 ) -> KgnStackedBarplot:
     """Generate a publication-grade customizable stacked barplot for KEGG pathway groups.
