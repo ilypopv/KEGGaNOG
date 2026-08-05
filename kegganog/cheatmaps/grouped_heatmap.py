@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Single-sample grouped three-panel heatmap generator module for KEGGaNOG.
 
 This module categorizes metabolic pathways into distinct biological buckets,
@@ -7,7 +6,7 @@ functional group metadata tags.
 """
 
 import warnings
-from typing import Dict, List, Optional, Sequence, Set, Tuple
+from collections.abc import Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,7 +22,7 @@ from .heatmaps_common import (
     save_heatmap_png,
 )
 
-function_groups: Dict[str, List[str]] = {
+function_groups: dict[str, list[str]] = {
     "Carbon fixation": [
         "3-Hydroxypropionate Bicycle",
         "4-Hydroxybutyrate/3-hydroxypropionate",
@@ -241,10 +240,10 @@ def generate_grouped_heatmap(
     output_folder: str,
     dpi: int,
     color: str,
-    sample_name: Optional[str],
-    figsize: Optional[Tuple[float, float]] = None,
+    sample_name: str | None,
+    figsize: tuple[float, float] | None = None,
     annot: bool = True,
-) -> Tuple[plt.Figure, Sequence[plt.Axes]]:
+) -> tuple[plt.Figure, Sequence[plt.Axes]]:
     """Generate a functional grouped three-panel heatmap for a single sample profile.
 
     Parses tabular data streams, maps specific keys to categorical clusters, introduces
@@ -278,7 +277,7 @@ def generate_grouped_heatmap(
         pbar.update(1)
 
         # Lowercase mapping for robust group categorization matching
-        function_groups_lower: Dict[str, Set[str]] = {
+        function_groups_lower: dict[str, set[str]] = {
             group: {func.lower() for func in funcs}
             for group, funcs in function_groups.items()
         }
@@ -380,8 +379,8 @@ def generate_grouped_heatmap(
         group_labels: Sequence[str],
         ax: plt.Axes,
         cbar: bool,
-        cbar_axis: Optional[plt.Axes] = None,
-        cbar_kws: Optional[Dict[str, str]] = None,
+        cbar_axis: plt.Axes | None = None,
+        cbar_kws: dict[str, str] | None = None,
     ) -> None:
         value_columns = part_df.columns[1:-1]
         part_df[value_columns] = part_df[value_columns].fillna(0)
