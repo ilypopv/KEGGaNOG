@@ -109,7 +109,7 @@ def radarplot(
 
     # Initialize structural subplots container canvas layers
     fig, ax = plt.subplots(
-        figsize=figsize, subplot_kw=dict(polar=True), facecolor=background_color
+        figsize=figsize, subplot_kw={"polar": True}, facecolor=background_color
     )
 
     # Establish palette map dictionaries compliant with static analysis
@@ -171,11 +171,11 @@ def radarplot(
             fontweight=label_weight,
             style=label_style,
             bbox=(
-                dict(
-                    facecolor=label_background if label_background else "none",
-                    edgecolor=label_edgecolor if label_edgecolor else "none",
-                    boxstyle="round,pad=0.2",
-                )
+                {
+                    "facecolor": label_background if label_background else "none",
+                    "edgecolor": label_edgecolor if label_edgecolor else "none",
+                    "boxstyle": "round,pad=0.2",
+                }
                 if label_background or label_edgecolor
                 else None
             ),
