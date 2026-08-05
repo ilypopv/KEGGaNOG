@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Data parsing, execution, and matrix aggregation engine for multi-cohort workflows.
 
 This module orchestrates parallel or sequential functional evaluation of multiple
