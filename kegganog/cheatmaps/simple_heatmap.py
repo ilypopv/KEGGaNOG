@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Single-sample three-panel heatmap generator module for KEGGaNOG profiles.
 
 This module processes raw KEGG-Decoder output strings, normalizes single-vector
@@ -6,7 +5,7 @@ functional columns, and projects values onto a partitioned matrix grid layout.
 """
 
 import warnings
-from typing import Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -25,10 +24,10 @@ def generate_heatmap(
     output_folder: str,
     dpi: int,
     color: str,
-    sample_name: Optional[str],
-    figsize: Optional[Tuple[float, float]] = None,
+    sample_name: str | None,
+    figsize: tuple[float, float] | None = None,
     annot: bool = True,
-) -> Tuple[plt.Figure, Sequence[plt.Axes]]:
+) -> tuple[plt.Figure, Sequence[plt.Axes]]:
     """Generate a publication-grade partitioned three-panel heatmap for a single sample vector.
 
     Parses raw tabular streams, extracts targeted function column headers, maps
