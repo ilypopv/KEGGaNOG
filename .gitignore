@@ -136,3 +136,4 @@ Pipfile.lock
 *.zip
 *.tar.gz
 *.7z
+uv.lock
