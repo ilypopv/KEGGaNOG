@@ -51,7 +51,7 @@ def launch() -> None:
         )
     except KeyboardInterrupt:
         print("\n  Server stopped by user. Goodbye!")
-    except Exception as e:
+    except (OSError, RuntimeError, ImportError, ModuleNotFoundError) as e:
         print(f"\n  Critical server error: {e}")
 
 
