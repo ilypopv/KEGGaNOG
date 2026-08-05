@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Radar plot visualization module for KEGG module completion profiles.
 
 This module builds standalone polar spider/radar charts tracking individual
@@ -6,7 +5,8 @@ pathway completeness metrics across continuous sample coordinates.
 """
 
 import warnings
-from typing import Literal, Optional, Sequence, Tuple
+from collections.abc import Sequence
+from typing import Literal
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -31,10 +31,10 @@ class KgnRadar(KgnPlotBase):
 def radarplot(
     df: pd.DataFrame,
     pathways: Sequence[str],
-    figsize: Tuple[float, float] = (8.0, 8.0),
-    colors: Optional[Sequence[str]] = None,
-    sample_order: Optional[Sequence[str]] = None,
-    title: Optional[str] = None,
+    figsize: tuple[float, float] = (8.0, 8.0),
+    colors: Sequence[str] | None = None,
+    sample_order: Sequence[str] | None = None,
+    title: str | None = None,
     title_fontsize: float = 14.0,
     title_color: str = "black",
     title_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
@@ -44,20 +44,20 @@ def radarplot(
     label_color: str = "black",
     label_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
     label_style: Literal["normal", "italic", "oblique"] = "normal",
-    label_background: Optional[str] = None,
-    label_edgecolor: Optional[str] = None,
+    label_background: str | None = None,
+    label_edgecolor: str | None = None,
     label_pad: float = 1.05,
     ytick_fontsize: float = 8.0,
     ytick_color: str = "black",
     ytick_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
     ytick_alpha: float = 0.5,
-    yticklabels: Optional[Sequence[str]] = None,
+    yticklabels: Sequence[str] | None = None,
     fill_alpha: float = 0.25,
     line_width: float = 2.0,
     line_style: Literal["solid", "dashed", "dashdot", "dotted", "-"] = "solid",
-    background_color: Optional[str] = "white",
+    background_color: str | None = "white",
     legend_loc: str = "upper right",
-    legend_bbox: Tuple[float, float] = (1.3, 1.1),
+    legend_bbox: tuple[float, float] = (1.3, 1.1),
     show_legend: bool = True,
 ) -> KgnRadar:
     """Generate a publication-grade customizable polar radar chart for KEGG pathways.
