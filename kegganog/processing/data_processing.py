@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Data parsing and execution sub-engine for internal functional profile workflows.
 
 This module handles the extraction and formatting of KO (KEGG Orthology) terms
