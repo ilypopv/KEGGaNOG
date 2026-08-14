@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Correlation network visualization module for KEGG module completion profiles.
 
 This module builds standalone topological graph networks tracking sample-to-sample
@@ -6,7 +5,7 @@ reconstruction consistency and mathematical correlation strengths extracted from
 eggNOG-mapper functional annotations.
 """
 
-from typing import Literal, Optional, Tuple, Union
+from typing import Literal
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -32,7 +31,7 @@ class KgnCorrnet(KgnPlotBase):
 
 def correlation_network(
     df: pd.DataFrame,
-    figsize: Tuple[float, float] = (12.0, 6.0),
+    figsize: tuple[float, float] = (12.0, 6.0),
     threshold: float = 0.5,
     node_size: float = 700.0,
     node_color: str = "#A3D5FF",
@@ -43,15 +42,15 @@ def correlation_network(
     label_verticalalignment: Literal["center", "top", "bottom", "baseline"] = "center",
     label_horizontalalignment: Literal["center", "right", "left"] = "center",
     label_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
-    edge_cmap: Union[str, Colormap] = colormaps["coolwarm"],
+    edge_cmap: str | Colormap = colormaps["coolwarm"],
     cbar_size: float = 0.5,
-    title: Optional[str] = None,
+    title: str | None = None,
     title_fontsize: float = 16.0,
     title_color: str = "black",
     title_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
     title_style: Literal["normal", "italic", "oblique"] = "normal",
-    background_color: Optional[str] = "white",
-    save_matrix: Optional[str] = None,
+    background_color: str | None = "white",
+    save_matrix: str | None = None,
 ) -> KgnCorrnet:
     """Generate a publication-grade customizable correlation network for KEGG reconstructions.
 

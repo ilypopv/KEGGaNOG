@@ -22,15 +22,7 @@ from kegganog.processing.data_processing import _ensure_kegg_decoder
 # Helpers
 # ---------------------------------------------------------------------------
 
-_EMAPPER_HEADER = "\n".join(
-    [
-        "## header line 1",
-        "## header line 2",
-        "## header line 3",
-        "## header line 4",
-        "KEGG_ko\tOther",
-    ]
-)
+_EMAPPER_HEADER = "## header line 1\n## header line 2\n## header line 3\n## header line 4\nKEGG_ko\tOther"
 
 
 def _write_emapper(path: Path, ko_entries: list[str]) -> None:
@@ -97,9 +89,11 @@ def test_ensure_kegg_decoder_downloads_when_missing(tmp_path):
 def test_ensure_kegg_decoder_raises_on_network_failure(tmp_path):
     script_path = tmp_path / "KEGG_decoder.py"
 
-    with patch("requests.get", side_effect=Exception("network error")):
-        with pytest.raises(RuntimeError, match="Failed to download"):
-            _ensure_kegg_decoder(script_path)
+    with (
+        patch("requests.get", side_effect=Exception("network error")),
+        pytest.raises(RuntimeError, match="Failed to download"),
+    ):
+        _ensure_kegg_decoder(script_path)
 
     assert not script_path.exists()
 

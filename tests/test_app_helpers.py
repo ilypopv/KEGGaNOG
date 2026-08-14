@@ -19,7 +19,7 @@ import uuid
 import zipfile
 from pathlib import Path
 
-import httpx
+import httpx2
 import pytest
 from fastapi.testclient import TestClient
 
@@ -278,8 +278,10 @@ async def test_viz_barplot_with_fixture_tsv(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(f"/viz/{job_id}", data={"plot_type": "barplot"})
         assert r.status_code == 200
         assert r.headers.get("content-type", "").startswith("image/png")
@@ -310,8 +312,10 @@ async def test_viz_corrnet_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(f"/viz/{job_id}", data={"plot_type": "corrnet"})
         assert r.status_code == 200
         assert r.headers.get("content-type", "").startswith("image/png")
@@ -337,8 +341,10 @@ async def test_viz_corrnet_invalid_edge_cmap_falls_back_gracefully(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={"plot_type": "corrnet", "edge_cmap": "not a valid cmap name!"},
@@ -367,8 +373,10 @@ async def test_viz_radarplot_no_pathways_selected_returns_500(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={"plot_type": "radarplot", "pathways_selected": ""},
@@ -395,8 +403,10 @@ async def test_viz_stackedbar_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(f"/viz/{job_id}", data={"plot_type": "stackedbar"})
         assert r.status_code == 200
         assert r.headers.get("content-type", "").startswith("image/png")
@@ -421,8 +431,10 @@ async def test_viz_streamgraph_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(f"/viz/{job_id}", data={"plot_type": "streamgraph"})
         assert r.status_code == 200
         assert r.headers.get("content-type", "").startswith("image/png")
@@ -448,8 +460,10 @@ async def test_viz_heatmap_single_simple_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={
@@ -482,8 +496,10 @@ async def test_viz_heatmap_single_grouped_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={
@@ -516,8 +532,10 @@ async def test_viz_heatmap_multi_simple_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={"plot_type": "heatmap", "heatmap_group": "false"},
@@ -546,8 +564,10 @@ async def test_viz_heatmap_multi_grouped_returns_png(tmp_path):
         "message": "",
     }
     try:
-        transport = httpx.ASGITransport(app=app)
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as ac:
+        transport = httpx2.ASGITransport(app=app)
+        async with httpx2.AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as ac:
             r = await ac.post(
                 f"/viz/{job_id}",
                 data={"plot_type": "heatmap", "heatmap_group": "true"},

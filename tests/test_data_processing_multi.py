@@ -21,15 +21,7 @@ from kegganog.processing import data_processing_multi
 # Helpers
 # ---------------------------------------------------------------------------
 
-_EMAPPER_HEADER = "\n".join(
-    [
-        "## header line 1",
-        "## header line 2",
-        "## header line 3",
-        "## header line 4",
-        "KEGG_ko\tOther",
-    ]
-)
+_EMAPPER_HEADER = "## header line 1\n## header line 2\n## header line 3\n## header line 4\nKEGG_ko\tOther"
 
 
 def _write_emapper(path: Path, ko_entries: list[str]) -> None:
@@ -38,7 +30,7 @@ def _write_emapper(path: Path, ko_entries: list[str]) -> None:
 
 def _write_pathways_tsv(path: Path, prefix: str, values: list[float]) -> None:
     """Write a minimal KEGG-Decoder-style pathways TSV for merge tests."""
-    headers = "\t".join(["Glycolysis", "TCA Cycle"])
+    headers = "Glycolysis\tTCA Cycle"
     vals = "\t".join(str(v) for v in values)
     path.write_text(f"{prefix}\t{headers}\n{prefix}\t{vals}\n")
 

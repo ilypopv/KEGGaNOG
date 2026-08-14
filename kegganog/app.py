@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """FastAPI web application orchestration gateway for KEGGaNOG pipelines.
 
 This module exposes asynchronous endpoints for single- and multi-sample functional
@@ -19,7 +18,7 @@ import tempfile
 import uuid
 from importlib.metadata import version as _metadata_version
 from pathlib import Path
-from typing import Dict, FrozenSet, List, Literal, Optional, Tuple, Union
+from typing import Annotated, Literal
 
 import pandas as pd
 from fastapi import FastAPI, Form, UploadFile
@@ -59,7 +58,7 @@ app.mount("/static", StaticFiles(directory=_static_dir), name="static")
 # ---------------------------------------------------------------------------
 
 # Explicit typing for central tracking registry mapping job UUIDs to properties
-_jobs: Dict[str, Dict[str, Union[str, Optional[Path], List[str]]]] = {}
+_jobs: dict[str, dict[str, str | Path | None | list[str]]] = {}
 
 # Upload constraints and boundary allocations
 MAX_UPLOAD_BYTES_SINGLE: int = 80 * 1024 * 1024
@@ -67,7 +66,7 @@ MAX_UPLOAD_BYTES_PER_MULTI_FILE: int = 80 * 1024 * 1024
 MAX_MULTI_UPLOAD_FILES: int = 64
 MAX_MULTI_BATCH_BYTES: int = 400 * 1024 * 1024
 
-_ALLOWED_PLOT_TYPES: FrozenSet[str] = frozenset(
+_ALLOWED_PLOT_TYPES: frozenset[str] = frozenset(
     {"barplot", "corrnet", "radarplot", "stackedbar", "streamgraph", "heatmap"}
 )
 
@@ -79,7 +78,7 @@ def _secure_temp_path(suffix: str) -> Path:
     return Path(path)
 
 
-def _safe_client_filename(filename: Optional[str]) -> str:
+def _safe_client_filename(filename: str | None) -> str:
     """Sanitize path-traversal anomalies out of multi-part uploaded file streams."""
     raw = (filename or "").strip() or "sample.annotations"
     base = Path(raw).name
@@ -90,7 +89,7 @@ def _safe_client_filename(filename: Optional[str]) -> str:
 
 async def _read_upload_with_limit(upload: UploadFile, max_bytes: int) -> bytes:
     """Read binary chunks sequentially while throwing exceptions if bounds are exceeded."""
-    chunks: List[bytes] = []
+    chunks: list[bytes] = []
     total = 0
     chunk_size = 1024 * 1024
     while True:
@@ -106,7 +105,7 @@ async def _read_upload_with_limit(upload: UploadFile, max_bytes: int) -> bytes:
     return b"".join(chunks)
 
 
-def _normalize_job_id(job_id: str) -> Optional[str]:
+def _normalize_job_id(job_id: str) -> str | None:
     """Validate input character strings against canonical UUID standards."""
     try:
         return str(uuid.UUID(job_id))
@@ -138,10 +137,10 @@ async def index() -> HTMLResponse:
 async def run_analysis(
     file: UploadFile,
     dpi: int = Form(default=300),
-    color: ValidColor = Form(default="Blues"),
+    color: Annotated[ValidColor, Form()] = "Blues",
     sample_name: str = Form(default="SAMPLE"),
     group: bool = Form(default=False),
-) -> Union[JobStatus, JSONResponse]:
+) -> JobStatus | JSONResponse:
     """Validate incoming single file parameters and schedule long-running threads."""
     try:
         params = WebParams(dpi=dpi, color=color, sample_name=sample_name, group=group)
@@ -175,11 +174,11 @@ async def run_analysis(
 
 @app.post("/run-multi", response_model=JobStatus)
 async def run_analysis_multi(
-    files: List[UploadFile],
+    files: list[UploadFile],
     dpi: int = Form(default=300),
-    color: ValidColor = Form(default="Blues"),
+    color: Annotated[ValidColor, Form()] = "Blues",
     group: bool = Form(default=False),
-) -> Union[JobStatus, JSONResponse]:
+) -> JobStatus | JSONResponse:
     """Process an uploaded matrix collection array under cumulative memory safeguards."""
     valid_files = [f for f in files if f.filename and f.filename.strip()]
     if not valid_files:
@@ -198,7 +197,7 @@ async def run_analysis_multi(
         messages = [f"{err['loc'][0]}: {err['msg']}" for err in e.errors()]
         return JSONResponse(status_code=422, content={"detail": messages})
 
-    named_files: List[Tuple[str, bytes]] = []
+    named_files: list[tuple[str, bytes]] = []
     batch_total = 0
     for f in valid_files:
         try:
@@ -349,36 +348,36 @@ async def run_viz(
     title: str = Form(default=""),
     title_fontsize: float = Form(default=16.0),
     title_color: str = Form(default="black"),
-    title_weight: FontWeight = Form(default="normal"),
-    title_style: FontStyle = Form(default="normal"),
+    title_weight: Annotated[FontWeight, Form()] = "normal",
+    title_style: Annotated[FontStyle, Form()] = "normal",
     background_color: str = Form(default="white"),
     xlabel: str = Form(default=""),
     xlabel_fontsize: float = Form(default=14.0),
     xlabel_color: str = Form(default="black"),
-    xlabel_weight: FontWeight = Form(default="normal"),
-    xlabel_style: FontStyle = Form(default="normal"),
+    xlabel_weight: Annotated[FontWeight, Form()] = "normal",
+    xlabel_style: Annotated[FontStyle, Form()] = "normal",
     ylabel: str = Form(default=""),
     ylabel_fontsize: float = Form(default=14.0),
     ylabel_color: str = Form(default="black"),
-    ylabel_weight: FontWeight = Form(default="normal"),
-    ylabel_style: FontStyle = Form(default="normal"),
+    ylabel_weight: Annotated[FontWeight, Form()] = "normal",
+    ylabel_style: Annotated[FontStyle, Form()] = "normal",
     xticks_fontsize: float = Form(default=12.0),
     xticks_color: str = Form(default="black"),
-    xticks_weight: FontWeight = Form(default="normal"),
-    xticks_style: FontStyle = Form(default="normal"),
+    xticks_weight: Annotated[FontWeight, Form()] = "normal",
+    xticks_style: Annotated[FontStyle, Form()] = "normal",
     xticks_rotation: float = Form(default=0.0),
-    xticks_ha: HorizontalAlignment = Form(default="center"),
+    xticks_ha: Annotated[HorizontalAlignment, Form()] = "center",
     yticks_fontsize: float = Form(default=12.0),
     yticks_color: str = Form(default="black"),
-    yticks_weight: FontWeight = Form(default="normal"),
-    yticks_style: FontStyle = Form(default="normal"),
+    yticks_weight: Annotated[FontWeight, Form()] = "normal",
+    yticks_style: Annotated[FontStyle, Form()] = "normal",
     grid: bool = Form(default=True),
     grid_linestyle: str = Form(default="--"),
     grid_alpha: float = Form(default=0.7),
     cmap: str = Form(default=""),
     cmap_range_min: int = Form(default=8),
     cmap_range_max: int = Form(default=30),
-    sort_order: SortOrder = Form(default="descending"),
+    sort_order: Annotated[SortOrder, Form()] = "descending",
     box_color: str = Form(default="blue"),
     showfliers: bool = Form(default=True),
     grid_color: str = Form(default="gray"),
@@ -390,7 +389,7 @@ async def run_viz(
     node_linewidths: float = Form(default=1.5),
     label_fontsize: float = Form(default=8.0),
     label_color: str = Form(default="#03045E"),
-    label_weight: FontWeight = Form(default="normal"),
+    label_weight: Annotated[FontWeight, Form()] = "normal",
     edge_cmap: str = Form(default="coolwarm"),
     cbar_size: float = Form(default=0.5),
     pathways_selected: str = Form(default=""),
@@ -398,7 +397,7 @@ async def run_viz(
     sample_order: str = Form(default=""),
     fill_alpha: float = Form(default=0.25),
     line_width: float = Form(default=2.0),
-    line_style: LineStyle = Form(default="solid"),
+    line_style: Annotated[LineStyle, Form()] = "solid",
     label_background: str = Form(default=""),
     label_edgecolor: str = Form(default=""),
     label_pad: float = Form(default=1.05),
@@ -448,7 +447,7 @@ async def run_viz(
             return []
         try:
             return json.loads(s_clean)
-        except Exception:
+        except (json.JSONDecodeError, TypeError):
             return []
 
     figsize = (
@@ -533,7 +532,7 @@ async def run_viz(
             legend_fontsize,
             (legend_bbox_x, legend_bbox_y),
         )
-    except Exception as e:
+    except (ValueError, KeyError, FileNotFoundError, RuntimeError, TypeError) as e:
         return JSONResponse(status_code=500, content={"detail": str(e)})
 
     return FileResponse(path=png_path, media_type="image/png")
@@ -568,12 +567,18 @@ async def _run_job(job_id: str, file_bytes: bytes, params: WebParams) -> None:
                 "pathways": result.pathways,
             }
         )
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        RuntimeError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+    ) as e:
         _jobs[job_id].update({"status": "error", "message": str(e)})
 
 
 async def _run_job_multi(
-    job_id: str, named_files: List[Tuple[str, bytes]], params: WebParams
+    job_id: str, named_files: list[tuple[str, bytes]], params: WebParams
 ) -> None:
     """Execute collection serialization loops mapping structural tabular datasets."""
     _jobs[job_id]["status"] = "running"
@@ -597,7 +602,13 @@ async def _run_job_multi(
                 "pathways": result.pathways,
             }
         )
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        RuntimeError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+    ) as e:
         _jobs[job_id].update({"status": "error", "message": str(e)})
 
 
@@ -609,7 +620,7 @@ async def _run_job_multi(
 def _blocking_viz(
     tsv_path: str,
     plot_type: str,
-    figsize: Optional[Tuple[float, float]],
+    figsize: tuple[float, float] | None,
     dpi: int,
     heatmap_color: str,
     heatmap_group: bool,
@@ -662,14 +673,14 @@ def _blocking_viz(
     label_weight: FontWeight,
     edge_cmap_name: str,
     cbar_size: float,
-    pathways_selected: List[str],
-    colors_selected: List[str],
-    sample_order: List[str],
+    pathways_selected: list[str],
+    colors_selected: list[str],
+    sample_order: list[str],
     fill_alpha: float,
     line_width: float,
     line_style: LineStyle,
-    label_background: Optional[str],
-    label_edgecolor: Optional[str],
+    label_background: str | None,
+    label_edgecolor: str | None,
     label_pad: float,
     show_legend: bool,
     legend_loc: str,
@@ -678,7 +689,7 @@ def _blocking_viz(
     edge_linewidth: float,
     stream_fill_alpha: float,
     legend_fontsize: float,
-    legend_bbox: Tuple[float, float],
+    legend_bbox: tuple[float, float],
 ) -> str:
     """Thread-isolated blocking core drawing dispatcher rendering static PNGs to temporary storage."""
     import matplotlib.pyplot as plt

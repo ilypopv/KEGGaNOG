@@ -7,11 +7,11 @@ from .kgnplot.stackedbar import stacked_barplot
 from .kgnplot.streamgraph import streamgraph
 
 __all__: list[str] = [
+    "barplot",
     "boxplot",
     "correlation_network",
-    "barplot",
-    "radarplot",
     "heatmap",
-    "streamgraph",
+    "radarplot",
     "stacked_barplot",
+    "streamgraph",
 ]

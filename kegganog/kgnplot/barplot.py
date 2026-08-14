@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
 """Horizontal barplot visualization module for KEGG module completion profiles.
 
 This module builds standalone sorted horizontal bar charts tracking individual
 pathway completeness scores extracted from eggNOG-mapper functional annotations.
 """
 
-from typing import Literal, Optional, Sequence, Tuple, Union
+from collections.abc import Sequence
+from typing import Literal
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -29,10 +29,10 @@ class KgnBarplot(KgnPlotBase):
 
 def barplot(
     df: pd.DataFrame,
-    figsize: Tuple[float, float] = (8.0, 12.0),
-    cmap: Union[str, Sequence[str]] = "Greens",
-    cmap_range: Tuple[int, int] = (8, 30),
-    title: Optional[str] = None,
+    figsize: tuple[float, float] = (8.0, 12.0),
+    cmap: str | Sequence[str] = "Greens",
+    cmap_range: tuple[int, int] = (8, 30),
+    title: str | None = None,
     title_fontsize: float = 16.0,
     title_color: str = "black",
     title_weight: Literal["normal", "bold", "heavy", "light"] = "normal",
@@ -58,7 +58,7 @@ def barplot(
     grid: bool = True,
     grid_linestyle: str = "--",
     grid_alpha: float = 0.7,
-    background_color: Optional[str] = "white",
+    background_color: str | None = "white",
     sort_order: Literal["ascending", "descending"] = "descending",
 ) -> KgnBarplot:
     """Generate a publication-grade customizable horizontal barplot for pathway completeness.

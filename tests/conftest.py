@@ -12,7 +12,7 @@ test_heatmaps_characterization.py ← cheatmap rendering reproducibility (PNG ha
 test_kgnplot.py                ← kgnplot public API smoke + parameter-validation tests
 test_app_helpers.py            ← app.py pure helpers (_normalize_job_id, _safe_client_filename)
                                    and per-route unit tests that need _jobs manipulation
-test_web_routes.py             ← HTTP-level FastAPI surface tests (TestClient / httpx)
+test_web_routes.py             ← HTTP-level FastAPI surface tests (TestClient / httpx2)
 test_web_launch.py             ← kegganog.web launch + browser-open tests
 """
 

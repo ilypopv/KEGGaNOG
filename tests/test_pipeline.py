@@ -36,7 +36,7 @@ from kegganog.processing.pipeline import (
 
 def _make_minimal_png_bytes() -> bytes:
     buf = io.BytesIO()
-    fig, ax = plt.subplots(figsize=(1, 1))
+    fig, _ax = plt.subplots(figsize=(1, 1))
     fig.savefig(buf, format="png", dpi=72)
     plt.close(fig)
     return buf.getvalue()

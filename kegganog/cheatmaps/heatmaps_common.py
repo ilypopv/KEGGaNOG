@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Shared helper utilities and structural constants for KEGGaNOG heatmap layouts.
 
 This module houses categorical functional group buckets and geometric partitioning
@@ -8,7 +7,7 @@ algorithms utilizing multi-panel subplots to visualize KEGG module profiles.
 from __future__ import annotations
 
 import os
-from typing import Sequence, Tuple
+from collections.abc import Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -97,7 +96,7 @@ def insert_split_rows_between_groups(
 
 
 def create_three_panel_heatmap_figure(
-    figsize: Tuple[float, float],
+    figsize: tuple[float, float],
 ) -> tuple[plt.Figure, Sequence[plt.Axes], plt.Axes]:
     """Initialize a multi-panel grid layout consisting of three aligned subplots and a colorbar.
 

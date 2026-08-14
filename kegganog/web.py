@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Entry point for the KEGGaNOG desktop web application.
 
 Orchestrates the lifecycle of the Uvicorn ASGI server and coordinates
@@ -52,7 +51,7 @@ def launch() -> None:
         )
     except KeyboardInterrupt:
         print("\n  Server stopped by user. Goodbye!")
-    except Exception as e:
+    except (OSError, RuntimeError, ImportError, ModuleNotFoundError) as e:
         print(f"\n  Critical server error: {e}")
 
 

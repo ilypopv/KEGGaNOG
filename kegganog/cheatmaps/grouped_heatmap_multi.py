@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Multi-sample grouped three-panel heatmap generator module for KEGGaNOG.
 
 This module processes composite matrices tracking functional group buckets across multiple
@@ -6,7 +5,7 @@ samples, calculates custom geometric margin pads, and draws unified partitioned 
 """
 
 import warnings
-from typing import Dict, Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -29,8 +28,8 @@ def generate_grouped_heatmap_multi(
     output_folder: str,
     dpi: int,
     color: str,
-    figsize: Optional[Tuple[float, float]] = None,
-) -> Tuple[plt.Figure, Sequence[plt.Axes]]:
+    figsize: tuple[float, float] | None = None,
+) -> tuple[plt.Figure, Sequence[plt.Axes]]:
     """Generate a functional grouped dynamic wide three-panel heatmap for multiple samples.
 
     Processes multidimensional pathway matrices, dynamically evaluates category margins,
@@ -162,9 +161,11 @@ def generate_grouped_heatmap_multi(
                     ha="right",
                     va="center",
                     weight="bold",
-                    bbox=dict(
-                        boxstyle="round,pad=0.3", edgecolor="none", facecolor="white"
-                    ),
+                    bbox={
+                        "boxstyle": "round,pad=0.3",
+                        "edgecolor": "none",
+                        "facecolor": "white",
+                    },
                 )
 
     def plot_heatmap(
@@ -172,8 +173,8 @@ def generate_grouped_heatmap_multi(
         group_labels: Sequence[str],
         ax: plt.Axes,
         cbar: bool,
-        cbar_axis: Optional[plt.Axes] = None,
-        cbar_kws: Optional[Dict[str, str]] = None,
+        cbar_axis: plt.Axes | None = None,
+        cbar_kws: dict[str, str] | None = None,
     ) -> None:
         value_columns = part_df.columns[1:-1]
         part_df[value_columns] = part_df[value_columns].fillna(0)

@@ -1,0 +1,139 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+venv/
+ENV/
+env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Logs
+logs/
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Type checking
+.pyre/
+
+# Data files
+data/
+datasets/
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.db
+
+# Model artifacts
+models/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.joblib
+*.pkl
+
+# Experiment tracking
+mlruns/
+wandb/
+tensorboard/
+runs/
+
+# Outputs
+outputs/
+results/
+figures/
+plots/
+reports/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Secrets / credentials
+.env.local
+.env.*
+!.env.example
+
+# Package managers
+Pipfile.lock
+
+# Hatch
+.hatch/
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+
+# Snakemake
+.snakemake/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Docker
+*.pid
+
+# AWS / cloud
+.aws/
+
+# IDE-specific notebooks
+.spyproject/
+
+# Ignore large binaries
+*.zip
+*.tar.gz
+*.7z
+uv.lock

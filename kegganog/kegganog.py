@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Main command-line interface entry point for KEGGaNOG.
 
 This module orchestrates the entire KEGGaNOG suite, exposing a unified interface
@@ -11,7 +10,7 @@ import shutil
 import sys
 from importlib.metadata import version as _metadata_version
 from pathlib import Path
-from typing import Optional
+from typing import Annotated
 
 import typer
 from pydantic import ValidationError
@@ -69,8 +68,8 @@ def _version_callback(value: bool) -> None:
 
 
 def _validate_params(
-    input_path: Optional[str],
-    output_dir: Optional[str],
+    input_path: str | None,
+    output_dir: str | None,
     multi: bool,
     overwrite: bool,
     dpi: int,
@@ -172,13 +171,13 @@ def _run_pipeline(params: CLIParams) -> None:
     no_args_is_help=True,
 )
 def main(
-    input_path: Optional[str] = typer.Option(
+    input_path: str | None = typer.Option(
         None,
         "-i",
         "--input",
         help="Path to eggNOG-mapper annotation file.",
     ),
-    output_dir: Optional[str] = typer.Option(
+    output_dir: str | None = typer.Option(
         None,
         "-o",
         "--output",
@@ -202,12 +201,14 @@ def main(
         "--dpi",
         help="DPI resolution mapping index for the output image visualization.",
     ),
-    color: ValidColor = typer.Option(
-        "Blues",
-        "-c",
-        "--color",
-        help="Target seaborn color map palette matrix rule.",
-    ),
+    color: Annotated[
+        ValidColor,
+        typer.Option(
+            "-c",
+            "--color",
+            help="Target seaborn color map palette matrix rule.",
+        ),
+    ] = "Blues",
     sample_name: str = typer.Option(
         "SAMPLE",
         "-n",
@@ -225,7 +226,7 @@ def main(
         "--web",
         help="Launch the interactive local web user interface dashboard at http://localhost:8000.",
     ),
-    version: Optional[bool] = typer.Option(
+    version: bool | None = typer.Option(
         None,
         "-V",
         "--version",

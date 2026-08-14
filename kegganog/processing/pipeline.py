@@ -13,9 +13,9 @@ import os
 import shutil
 import tempfile
 import zipfile
+from collections.abc import Generator
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Generator, Optional
 
 import pandas as pd
 
@@ -106,7 +106,7 @@ def _pack_results(output_dir: Path) -> tuple[Path, Path]:
 
 @contextlib.contextmanager
 def _resolve_output_context(
-    output_dir: Optional[Path | str],
+    output_dir: Path | str | None,
 ) -> Generator[Path, None, None]:
     """Yield a stable active target directory context matching CLI or Web runstates.
 
@@ -227,7 +227,7 @@ def run_single(
     dpi: int,
     color: ValidColor,
     group: bool,
-    output_dir: Optional[Path | str] = None,
+    output_dir: Path | str | None = None,
 ) -> PipelineResult:
     """Execute the full core functional annotation profile pathway pipeline.
 
@@ -265,7 +265,7 @@ def run_multi(
     dpi: int,
     color: ValidColor,
     group: bool,
-    output_dir: Optional[Path | str] = None,
+    output_dir: Path | str | None = None,
 ) -> PipelineResult:
     """Execute the aggregate multi-sample cohort analytical matrix workflow.
 

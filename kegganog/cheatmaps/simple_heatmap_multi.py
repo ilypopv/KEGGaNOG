@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Multi-sample three-panel heatmap generator module for KEGGaNOG profiles.
 
 This module processes comprehensive matrix datasets across multiple sample columns,
@@ -7,7 +6,7 @@ dynamically computes proportional layout limits, and draws parallel subplots.
 
 import logging
 import warnings
-from typing import Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -28,8 +27,8 @@ def generate_heatmap_multi(
     output_folder: str,
     dpi: int,
     color: str,
-    figsize: Optional[Tuple[float, float]] = None,
-) -> Tuple[plt.Figure, Sequence[plt.Axes]]:
+    figsize: tuple[float, float] | None = None,
+) -> tuple[plt.Figure, Sequence[plt.Axes]]:
     """Generate a publication-grade dynamic wide three-panel heatmap for multiple samples.
 
     Processes pre-loaded multi-column functional matrices, computes scaled width ratios,
